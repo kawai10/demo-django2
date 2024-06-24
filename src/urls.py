@@ -4,6 +4,7 @@ from django.urls import path, include
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path("users/", include("src.users.urls")),
 ]
 
 if apps.is_installed("debug_toolbar"):
