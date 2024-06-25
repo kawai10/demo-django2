@@ -26,7 +26,7 @@ class CustomUserManager(BaseUserManager):
         return user
 
 
-class User(AbstractBaseUser, PermissionsMixin):
+class User(AbstractBaseUser):
     objects = CustomUserManager()
 
     class Meta:
@@ -38,6 +38,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     updated_at = models.DateTimeField(auto_now=True, verbose_name="updated at")
     is_active = models.BooleanField(default=True, verbose_name="is active")
     last_login = models.DateTimeField(auto_now=True, verbose_name="last login")
+    is_superuser = models.BooleanField(default=False, verbose_name="is superuser")
 
     USERNAME_FIELD = "email"
     # REQUIRED_FIELDS가 없는 경우 createsuperuser 명령어 시 email과 password만 입력함.
@@ -48,4 +49,10 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     @property
     def is_staff(self):
+        return self.is_superuser and self.is_active
+
+    def has_perm(self, perm, obj=None):
+        return self.is_superuser
+
+    def has_module_perms(self, add_label):
         return self.is_superuser and self.is_active
