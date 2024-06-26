@@ -39,11 +39,11 @@ class TokenRefreshAPIView(TokenRefreshView):
             raise InvalidToken(e.args[0])
 
         token = token_serializer.validated_data
-        print(token)
         response = Response(
-            {"detail": "access refresh success"}, status=status.HTTP_200_OK
+            {"detail": "token refresh success"}, status=status.HTTP_200_OK
         )
         response.set_cookie("access_token", token["access"], httponly=True)
+        response.set_cookie("refresh_token", token["refresh"], httponly=True)
 
         return response
 
