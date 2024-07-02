@@ -4,7 +4,6 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework_simplejwt.exceptions import TokenError, InvalidToken
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
-
 from src.users.serializers import CreateUserSerializer, LoginSerializer
 
 
