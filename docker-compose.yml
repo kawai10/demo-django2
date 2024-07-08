@@ -3,17 +3,12 @@ services:
   reverse-proxy:
     image: traefik:latest
     container_name: traefik
-    command:
-      - "--api.insecure=true"
-      - "--providers.docker=true"
-      - "--providers.docker.exposedByDefault=false"
-      - "--entrypoints.web.address=:80"
-      - "--log.level=DEBUG"
     ports:
       - "80:80"
       - "8080:8080"
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "./conf/traefik.toml:/etc/traefik/traefik.toml:ro"
 
   django-api:
     build:
@@ -42,6 +37,8 @@ services:
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - POSTGRES_DB=${POSTGRES_DB}
+    ports:
+      - "5432:5432"
     volumes:
       - ./data:/var/lib/postgresql/data
     restart: unless-stopped

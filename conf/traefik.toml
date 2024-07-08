@@ -1,0 +1,15 @@
+[providers]
+  [providers.docker]
+    exposedByDefault = false
+#    endpoint = "unix:///var/run/docker.sock"
+
+[api]
+  insecure = true
+
+[log]
+  level = "DEBUG"
+
+[entryPoints]
+  [entryPoints.web]
+    address = ":80"
+
