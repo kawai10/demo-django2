@@ -49,6 +49,8 @@ INSTALLED_APPS = [
     # third party
     "rest_framework",
     "rest_framework_simplejwt",
+    "django_celery_beat",
+    "django_celery_results",
     # "rest_framework.authtoken",
     # "dj_rest_auth",
     # "dj_rest_auth.registration",
@@ -200,3 +202,7 @@ AUTH_USER_MODEL = "users.User"
 INTERNAL_IPS = ["localhost", "127.0.0.1"]
 
 ALLOWED_HOSTS = ["seonghun.com"]
+
+# celery
+CELERY_BROKER_URL = "redis://redis:6379"
+CELERY_RESULT_BACKEND = CELERY_BROKER_URL

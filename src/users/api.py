@@ -2,8 +2,11 @@ from rest_framework import status
 from rest_framework.generics import CreateAPIView
 from rest_framework.request import Request
 from rest_framework.response import Response
+from rest_framework.views import APIView
 from rest_framework_simplejwt.exceptions import TokenError, InvalidToken
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+
+from src.task import test_task
 from src.users.serializers import CreateUserSerializer, LoginSerializer
 
 
@@ -45,6 +48,13 @@ class TokenRefreshAPIView(TokenRefreshView):
         response.set_cookie("refresh_token", token["refresh"], httponly=True)
 
         return response
+
+
+class CeleryTest(APIView):
+    @staticmethod
+    def get(request: Request) -> Response:
+        test_task.delay(2, 5)
+        return Response("Celery test task is running")
 
 
 # class LoginUserAPIView(APIView):

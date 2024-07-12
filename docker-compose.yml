@@ -23,10 +23,10 @@ services:
       - "./static:/static"
 
   django-api:
+    image: 'django-api'
     build:
       context: .
       dockerfile:  docker/Dockerfile
-    image: 'django-api'
     container_name: django-api
     env_file:
       - .env
@@ -50,3 +50,57 @@ services:
     volumes:
       - ./data:/var/lib/postgresql/data
     restart: unless-stopped
+
+  redis:
+    image: redis:latest
+    container_name: redis
+    ports:
+      - "6379:6379"
+    restart: unless-stopped
+
+  celery-worker:
+      image: celery-worker
+      build:
+        context: .
+        dockerfile: docker/Dockerfile
+      container_name: celery-worker
+      env_file:
+        - .env
+      command: celery -A config worker --loglevel=INFO
+      depends_on:
+        - reverse-proxy
+        - django-api
+      restart: always
+
+
+#  celery-beat-worker:
+#      image: django-api
+#      container_name: celery-beat-worker
+#      env_file:
+#        - .env
+#      command: celery -A worker worker --loglevel=INFO --concurrency=1 -Q beat
+#      depends_on:
+#        - django-api
+#        - celery-common-worker
+#      restart: always
+#
+#
+#  celery-beat:
+#      image: django-api
+#      container_name: celery-beat
+#      env_file:
+#        - .env
+#      command: celery -A worker beat -s ./task/schedule_beat_log/beat_log
+#      depends_on:
+#        - django-api
+#        - celery-common-worker
+#      restart: always
+
+
+  flower:
+    image: mher/flower
+    environment:
+      - CELERY_BROKER_URL=redis://redis:6379
+      - FLOWER_PORT=5555
+    ports:
+      - "5555:5555"
