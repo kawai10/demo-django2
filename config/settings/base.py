@@ -29,7 +29,7 @@ environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
 SECRET_KEY = env("DJANGO_SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env("DJANGO_DEBUG")
+DEBUG = env("DJANGO_DEBUG", default=True)
 
 # APPEND_SLASH = False
 
@@ -204,5 +204,5 @@ INTERNAL_IPS = ["localhost", "127.0.0.1"]
 ALLOWED_HOSTS = ["seonghun.com"]
 
 # celery
-CELERY_BROKER_URL = "redis://redis:6379"
+CELERY_BROKER_URL = env("CELERY_BROKER_URL")
 CELERY_RESULT_BACKEND = CELERY_BROKER_URL
