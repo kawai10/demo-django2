@@ -35,4 +35,4 @@ jobs:
         echo "DJANGO_SECRET_KEY=${{ secrets.DJANGO_SECRET_KEY}}" >> .env
     - name: Run Tests
       run: |
-        pytest -v
+        pytest
