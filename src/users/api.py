@@ -1,5 +1,5 @@
 from rest_framework import status
-from rest_framework.generics import CreateAPIView
+from rest_framework.generics import CreateAPIView, ListAPIView
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -7,7 +7,12 @@ from rest_framework_simplejwt.exceptions import TokenError, InvalidToken
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 from src.task import test_task
-from src.users.serializers import CreateUserSerializer, LoginSerializer
+from src.users.serializers import CreateUserSerializer, LoginSerializer, UserSerializer
+
+
+class ListUsers(ListAPIView):
+    queryset = UserSerializer.get_all_users()
+    serializer_class = UserSerializer
 
 
 class RegisterUserAPIView(CreateAPIView):

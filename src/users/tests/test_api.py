@@ -37,7 +37,7 @@ def test_signup(unauthenticated_api_client, faker):
 @pytest.mark.django_db
 # 유저 생성시에 패스워드를 암호화해서 저장해야함.
 # 로그인 API post 시에는 암호화 되기전의 패스워드를 넣어야함.
-def test_login(unauthenticated_api_client, faker, django_user_model):
+def test_login(unauthenticated_api_client, faker):
     password = faker.password(length=12)
 
     user: User = create_user(raw_password=password)
@@ -48,3 +48,13 @@ def test_login(unauthenticated_api_client, faker, django_user_model):
     print(response.data)
 
     assert response.status_code == status.HTTP_200_OK
+
+
+@pytest.mark.it("모든 유저 조회")
+@pytest.mark.django_db
+def test_get_all_users(unauthenticated_api_client):
+    user_list = [UserFactory() for __ in range(11)]
+    url: str = reverse("users:user-list")
+    response: Response = unauthenticated_api_client.get(url)
+    assert response.status_code == status.HTTP_200_OK
+    assert len(response.data) == len(user_list)

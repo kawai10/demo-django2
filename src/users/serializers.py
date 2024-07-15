@@ -15,6 +15,10 @@ class UserSerializer(serializers.ModelSerializer):
         fields = "__all__"
         extra_kwargs = {"password": {"write_only": True}}
 
+    @staticmethod
+    def get_all_users():
+        return User.objects.all()
+
 
 class CreateUserSerializer(UserSerializer):
 
