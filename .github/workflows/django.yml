@@ -63,4 +63,4 @@ jobs:
             --application-name django-deploy \
             --deployment-group-name django-develop-deploy \
             --deployment-config-name CodeDeployDefault.AllAtOnce \
-            --github-location repository=${{ github.repository}}, commitId=${{github.sha}}
+            --github-location repository=${{ github.repository}},commitId=${{github.sha}}
