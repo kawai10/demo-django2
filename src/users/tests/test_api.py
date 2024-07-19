@@ -1,6 +1,3 @@
-import json
-from typing import Dict
-
 import pytest
 from django.urls import reverse
 from rest_framework import status
@@ -17,6 +14,14 @@ def create_user(raw_password: str) -> User:
 @pytest.fixture
 def unauthenticated_api_client() -> APIClient:
     return APIClient()
+
+
+@pytest.fixture
+def api_client_with_force_auth(faker) -> APIClient:
+    user = create_user(raw_password=faker.password(length=12))
+    client = APIClient()
+    client.force_authenticate(user)
+    return client
 
 
 @pytest.mark.it("유저 회원가입 API 테스트")
@@ -45,16 +50,15 @@ def test_login(unauthenticated_api_client, faker):
 
     url: str = reverse("users:user-login")
     response: Response = unauthenticated_api_client.post(url, data=data)
-    print(response.data)
 
     assert response.status_code == status.HTTP_200_OK
 
 
 @pytest.mark.it("모든 유저 조회")
 @pytest.mark.django_db
-def test_get_all_users(unauthenticated_api_client):
-    user_list = [UserFactory() for __ in range(11)]
+def test_get_all_users(api_client_with_force_auth):
+    user_list = [UserFactory() for __ in range(10)]
     url: str = reverse("users:user-list")
-    response: Response = unauthenticated_api_client.get(url)
+    response: Response = api_client_with_force_auth.get(url)
     assert response.status_code == status.HTTP_200_OK
-    assert len(response.data) == len(user_list)
+    assert len(response.data) == len(user_list) + 1
