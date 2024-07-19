@@ -1,5 +1,6 @@
 from rest_framework import status
 from rest_framework.generics import CreateAPIView, ListAPIView
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -13,6 +14,7 @@ from src.users.serializers import CreateUserSerializer, LoginSerializer, UserSer
 class ListUsers(ListAPIView):
     queryset = UserSerializer.get_all_users()
     serializer_class = UserSerializer
+    permission_classes = [IsAuthenticated]
 
 
 class RegisterUserAPIView(CreateAPIView):
