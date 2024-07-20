@@ -8,3 +8,7 @@ gen
 docker
 db.*
 docker-compose.yml
+scripts
+conf
+.github.*
+appspec.yml
