@@ -95,7 +95,5 @@ services:
 
   flower:
     image: mher/flower
-    env_file:
-      - .env
     ports:
       - "5555:5555"
