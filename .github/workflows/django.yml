@@ -21,6 +21,8 @@ jobs:
         uses: minesunny/postgresql-action@v1.0.0
         with:
           postgresql version: '14'
+          postgresql db: 'postgrestestdb'
+          postgresql password: '1q2w3e4r'
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v3
         with:
