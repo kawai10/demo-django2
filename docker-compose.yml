@@ -62,8 +62,6 @@ services:
         context: .
         dockerfile: docker/Dockerfile
       container_name: celery-worker
-      env_file:
-        - .env
       command: celery -A config worker --loglevel=INFO
       depends_on:
         - reverse-proxy
