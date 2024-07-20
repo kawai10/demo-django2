@@ -18,9 +18,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Set up PostgreSQL
-        uses: minesunny/postgresql-action@v1.0.0
+        uses: harmon758/postgresql-action@v1
         with:
           postgresql version: '14'
+          postgresql user: 'myuser'
           postgresql db: 'postgrestestdb'
           postgresql password: '1q2w3e4r'
       - name: Set up Python ${{ matrix.python-version }}
