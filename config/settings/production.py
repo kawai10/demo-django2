@@ -7,14 +7,14 @@ ALLOWED_HOSTS = ["seonghun.com"]
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": env("POSTGRES_DB"),
-        "USER": env("POSTGRES_USER"),
-        "PASSWORD": env("POSTGRES_PASSWORD"),
-        "HOST": env("POSTGRES_HOST"),
-        "PORT": env("POSTGRES_PORT"),
+        "NAME": "postgres",
+        "USER": "myuser",
+        "PASSWORD": "1q2w3e4r",
+        "HOST": "postgres",
+        "PORT": 5432,
     }
 }
 
 # celery
-CELERY_BROKER_URL = env("CELERY_BROKER_URL")
+CELERY_BROKER_URL = "redis://redis:6379"
 CELERY_RESULT_BACKEND = CELERY_BROKER_URL
