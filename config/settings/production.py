@@ -7,11 +7,11 @@ ALLOWED_HOSTS = ["seonghun.com"]
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": env("POSTGRES_DB"),
-        "USER": env("POSTGRES_USER"),
-        "PASSWORD": env("POSTGRES_PASSWORD"),
+        "NAME": env("POSTGRES_DB", default="postgres"),
+        "USER": env("POSTGRES_USER", default="myuser"),
+        "PASSWORD": env("POSTGRES_PASSWORD", default="1q2w3e4r"),
         "HOST": env("POSTGRES_HOST", default="postgres"),
-        "PORT": env("POSTGRES_PORT"),
+        "PORT": env("POSTGRES_PORT", default=5432),
     }
 }
 
